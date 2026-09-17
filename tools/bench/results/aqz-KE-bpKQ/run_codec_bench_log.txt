@@ -1,0 +1,115 @@
+[app_h264_hw] starting app (codec=h264, hwdec=auto-safe)
+Label: app_h264_hw   Date: 2026-09-17T17:01:26   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        2          241.3            217.3        2.0
+Browser (bench prof.)       -
+
+Saved to D:\youtube-client\tools\bench\results\aqz-KE-bpKQ\app_h264_hw.txt
+  codec=h264
+  codec_long=H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+  width=1280
+  height=720
+  fps=60
+  position=54.2667
+  hwdec=d3d11va
+  frame_drops=11
+  decoder_frame_drops=0
+[app_h264_sw] starting app (codec=h264, hwdec=no)
+Label: app_h264_sw   Date: 2026-09-17T17:02:34   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        2          284.6            255.9        3.1
+Browser (bench prof.)       -
+
+Saved to D:\youtube-client\tools\bench\results\aqz-KE-bpKQ\app_h264_sw.txt
+  codec=h264
+  codec_long=H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+  width=1280
+  height=720
+  fps=60
+  position=59.1
+  hwdec=no
+  frame_drops=2
+  decoder_frame_drops=0
+[app_vp9_sw] starting app (codec=vp9, hwdec=no)
+Label: app_vp9_sw   Date: 2026-09-17T17:03:42   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        2          258.5            229.6        3.1
+Browser (bench prof.)       -
+
+Saved to D:\youtube-client\tools\bench\results\aqz-KE-bpKQ\app_vp9_sw.txt
+  codec=vp9
+  codec_long=Google VP9
+  width=1280
+  height=720
+  fps=60
+  position=59.133
+  hwdec=no
+  frame_drops=0
+  decoder_frame_drops=0
+[app_av1_sw] starting app (codec=av1, hwdec=no)
+Label: app_av1_sw   Date: 2026-09-17T17:04:49   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        2          271.3            242.7        4.3
+Browser (bench prof.)       -
+
+Saved to D:\youtube-client\tools\bench\results\aqz-KE-bpKQ\app_av1_sw.txt
+  codec=av1
+  codec_long=Alliance for Open Media AV1
+  width=1280
+  height=720
+  fps=60
+  position=59.2
+  hwdec=no
+  frame_drops=0
+  decoder_frame_drops=0
+[chrome_hw] starting Chrome (software decode: False)
+Label: chrome_hw   Date: 2026-09-17T17:06:16   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        -
+Browser (bench prof.)      11         1262.7            846.0        2.7
+
+Saved to D:\youtube-client\tools\bench\results\aqz-KE-bpKQ\chrome_hw.txt
+  stats={"adShowing":false,"codecs":"av01.0.08M.08 (398) / opus (251)","resolution":"1280x720@60 / 1280x720@60","quality":"hd720","videoWidth":1280,"videoHeight":720,"paused":false,"currentTime":71.712671,"droppedFrames":0,"totalFrames":4309}
+  kVideoDecoderName=D3D11VideoDecoder
+  kFrameUrl=https://www.youtube.com/watch?v=aqz-KE-bpKQ
+  kVideoTracks=[{"alpha mode":"is_opaque","codec":"av1","coded size":"1280x720","color space":{"matrix":"BT709","primaries":"BT709","range":"LIMITED","transfer":"BT709"},"encryption scheme":"Unencrypted","has extra data":false,"hdr metadata":{},"natural size":"1280x720","orientation":"0ø","profile":"av1 profile main","visible rect":"0,0 1280x720"}]
+  kIsPlatformVideoDecoder=true
+  software_flag=False
+  played_seconds_during_measurement=32.6
+[chrome_sw] starting Chrome (software decode: True)
+Label: chrome_sw   Date: 2026-09-17T17:07:45   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        -
+Browser (bench prof.)      11         1357.4            939.1        7.8
+
+Saved to D:\youtube-client\tools\bench\results\aqz-KE-bpKQ\chrome_sw.txt
+  stats={"adShowing":false,"codecs":"av01.0.08M.08 (398) / opus (251)","resolution":"1280x720@60 / 1280x720@60","quality":"hd720","videoWidth":1280,"videoHeight":720,"paused":false,"currentTime":71.836035,"droppedFrames":1,"totalFrames":4315}
+  kVideoDecoderName=Dav1dVideoDecoder
+  kFrameUrl=https://www.youtube.com/watch?v=aqz-KE-bpKQ
+  kVideoTracks=[{"alpha mode":"is_opaque","codec":"av1","coded size":"1280x720","color space":{"matrix":"BT709","primaries":"BT709","range":"LIMITED","transfer":"BT709"},"encryption scheme":"Unencrypted","has extra data":false,"hdr metadata":{},"natural size":"1280x720","orientation":"0ø","profile":"av1 profile main","visible rect":"0,0 1280x720"}]
+  kIsPlatformVideoDecoder=false
+  software_flag=True
+  played_seconds_during_measurement=32.6
+Video: https://www.youtube.com/watch?v=aqz-KE-bpKQ
+
+| Run | What was actually decoded | Private MB | Working set MB | CPU % (all cores) | CPU cores used | Dropped frames | Video advanced during 30 s |
+|---|---|---:|---:|---:|---:|---:|---:|
+| App, H.264, GPU decoding (default) | h264 1280x720@60, GPU (d3d11va) | 217 | 241 | 2.0 | 0.24 | 11 | 34.2 s |
+| App, H.264, CPU decoding | h264 1280x720@60, CPU | 256 | 285 | 3.1 | 0.38 | 2 | 34.1 s |
+| App, VP9 forced, CPU decoding | vp9 1280x720@60, CPU | 230 | 259 | 3.1 | 0.38 | 0 | 33 s |
+| App, AV1 forced, CPU decoding | av1 1280x720@60, CPU | 243 | 271 | 4.3 | 0.51 | 0 | 33.1 s |
+| Chrome, GPU decoding (default) | av01.0.08M.08 (398) / opus (251) 1280x720@60, GPU (D3D11VideoDecoder) | 846 | 1263 | 2.7 | 0.32 | 0 of 4309 | 32.6 s |
+| Chrome, CPU decoding (--disable-accelerated-video-decode) | av01.0.08M.08 (398) / opus (251) 1280x720@60, CPU (Dav1dVideoDecoder) | 939 | 1357 | 7.8 | 0.93 | 1 of 4315 | 32.6 s |
+Done.

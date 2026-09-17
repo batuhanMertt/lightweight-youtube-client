@@ -1,0 +1,16 @@
+﻿{
+    "label":  "app_vp9_sw",
+    "date":  "2026-09-17T17:03:42",
+    "seconds":  31,
+    "cpu":  "13th Gen Intel(R) Core(TM) i5-13420H",
+    "logicalCores":  12,
+    "groups":  {
+                   "youtube-client + mpv":  {
+                                                "processes":  2,
+                                                "workingSetMb":  258.5,
+                                                "privateMb":  229.6,
+                                                "cpuPercentOfAllCores":  3.13,
+                                                "coresUsed":  0.38
+                                            }
+               }
+}

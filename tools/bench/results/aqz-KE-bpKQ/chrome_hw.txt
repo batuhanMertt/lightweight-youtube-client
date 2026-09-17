@@ -1,0 +1,6 @@
+﻿Label: chrome_hw   Date: 2026-09-17T17:06:16   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        -
+Browser (bench prof.)      11         1262.7            846.0        2.7
