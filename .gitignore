@@ -1,0 +1,26 @@
+# Build output
+build/
+out/
+cmake-build-*/
+
+# Third-party binaries (download them, see README). mpv.exe is over GitHub's 100 MB limit.
+tools/mpv/
+
+# Local helper scripts with machine-specific paths
+build.bat
+
+# Editors / OS
+.vs/
+.vscode/
+.idea/
+*.user
+Thumbs.db
+desktop.ini
+
+# Local logs from helper scripts
+tools/screenshot_log.txt
+
+# Old design notes from an earlier plan (superseded by README)
+docs/ARCHITECTURE.md
+docs/EMBEDDED_PORTING.md
+docs/PERFORMANCE_GUIDELINES.md

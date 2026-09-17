@@ -1,0 +1,90 @@
+{
+  "channels": [
+    {
+      "channelId": "chan_001",
+      "channelTitle": "Embedded Linux Engineering",
+      "subscriberCount": "145K",
+      "recentVideos": [
+        {
+          "id": "sub_001",
+          "title": "Kernel Memory Subsystem Deep Dive",
+          "duration": "42:15",
+          "viewCount": 18200,
+          "publishedAt": "2 days ago",
+          "color": "#2c3e50"
+        },
+        {
+          "id": "sub_002",
+          "title": "Writing Linux Device Drivers for ARM",
+          "duration": "1:02:15",
+          "viewCount": 24100,
+          "publishedAt": "1 week ago",
+          "color": "#34495e"
+        },
+        {
+          "id": "sub_003",
+          "title": "Debugging Kernel Panics with GDB & Serial Console",
+          "duration": "39:05",
+          "viewCount": 11300,
+          "publishedAt": "2 weeks ago",
+          "color": "#16a085"
+        }
+      ]
+    },
+    {
+      "channelId": "chan_003",
+      "channelTitle": "Embedded Multimedia Hub",
+      "subscriberCount": "89K",
+      "recentVideos": [
+        {
+          "id": "sub_004",
+          "title": "GStreamer Zero-Copy Video Pipeline on ARM",
+          "duration": "35:10",
+          "viewCount": 9400,
+          "publishedAt": "3 days ago",
+          "color": "#8e44ad"
+        },
+        {
+          "id": "sub_005",
+          "title": "Embedded Linux Boot Time Optimization",
+          "duration": "27:19",
+          "viewCount": 15200,
+          "publishedAt": "2 weeks ago",
+          "color": "#e67e22"
+        },
+        {
+          "id": "sub_006",
+          "title": "Audio/Video Synchronization in C++",
+          "duration": "31:18",
+          "viewCount": 7800,
+          "publishedAt": "1 month ago",
+          "color": "#7f8c8d"
+        }
+      ]
+    },
+    {
+      "channelId": "chan_004",
+      "channelTitle": "Software Architecture Labs",
+      "subscriberCount": "210K",
+      "recentVideos": [
+        {
+          "id": "sub_007",
+          "title": "Why Electron Consumes 1GB RAM & Native C++ Fixes It",
+          "duration": "19:42",
+          "viewCount": 54000,
+          "publishedAt": "5 days ago",
+          "color": "#d35400"
+        },
+        {
+          "id": "sub_008",
+          "title": "Minimal BusyBox Rootfs from Scratch",
+          "duration": "18:30",
+          "viewCount": 18900,
+          "publishedAt": "3 weeks ago",
+          "color": "#27ae60"
+        }
+      ]
+    }
+  ],
+  "totalChannels": 3
+}

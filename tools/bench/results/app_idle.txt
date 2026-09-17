@@ -1,0 +1,6 @@
+﻿Label: app_idle   Date: 2026-09-17T15:38:45   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        1           22.7              5.1        0.5
+Browser (bench prof.)       -

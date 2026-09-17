@@ -1,0 +1,13 @@
+{
+  "app_name": "Lightweight YouTube Client",
+  "version": "1.0.0",
+  "max_home_videos": 20,
+  "max_search_results": 10,
+  "max_subscription_videos": 20,
+  "max_thumbnail_cache_mb": 16,
+  "network_timeout_ms": 6000,
+  "enable_profiling": true,
+  "ui_fps": 30,
+  "use_mock_data": false,
+  "youtube_api_key": ""
+}

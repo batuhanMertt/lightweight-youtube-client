@@ -1,0 +1,6 @@
+﻿Label: app_playing   Date: 2026-09-17T15:34:21   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        2          243.7            217.1        1.2
+Browser (bench prof.)       -

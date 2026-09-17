@@ -1,0 +1,14 @@
+{
+  "id": "vid_001",
+  "title": "Linux Kernel Architecture Deep Dive & Memory Subsystems",
+  "channelTitle": "Embedded Linux Engineering",
+  "channelId": "chan_001",
+  "durationSeconds": 2535,
+  "durationFormatted": "42:15",
+  "viewCount": 182400,
+  "likeCount": 14200,
+  "publishedAt": "2026-08-20T10:00:00Z",
+  "description": "A comprehensive deep dive into Linux kernel memory management. Topics covered:\n- Physical vs Virtual Memory addressing\n- The Page Allocator & Buddy System\n- Slab, Slub and Slob caches\n- Anonymous pages and Page Cache\n- Zero-copy transfers and DMA buffers\n- Mitigating OOM under memory pressure on embedded SoCs",
+  "resolutions": ["1080p", "720p", "480p", "360p"],
+  "streamUri": "mock://stream/vid_001.mp4"
+}

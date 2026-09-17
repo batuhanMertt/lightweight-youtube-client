@@ -1,0 +1,94 @@
+{
+  "items": [
+    {
+      "id": "vid_001",
+      "title": "Linux Kernel Architecture Deep Dive & Memory Subsystems",
+      "channelTitle": "Embedded Linux Engineering",
+      "channelId": "chan_001",
+      "duration": "42:15",
+      "viewCount": 182400,
+      "publishedAt": "2 days ago",
+      "description": "Understanding virtual memory management, slab allocator, page cache and zero-copy pipelines in modern Linux kernels.",
+      "color": "#2c3e50"
+    },
+    {
+      "id": "vid_002",
+      "title": "C++20 High Performance Embedded Systems Programming",
+      "channelTitle": "Modern C++ Systems",
+      "channelId": "chan_002",
+      "duration": "28:50",
+      "viewCount": 94300,
+      "publishedAt": "5 days ago",
+      "description": "Writing zero-allocation code, memory barriers, lock-free queues, and cache-friendly data structures in C++.",
+      "color": "#16a085"
+    },
+    {
+      "id": "vid_003",
+      "title": "GStreamer Zero-Copy Video Pipeline on ARM Devices",
+      "channelTitle": "Embedded Multimedia Hub",
+      "channelId": "chan_003",
+      "duration": "35:10",
+      "viewCount": 45100,
+      "publishedAt": "1 week ago",
+      "description": "Building hardware-accelerated video decoding pipelines with v4l2codecs, DRM/KMS sink, and Wayland integration.",
+      "color": "#8e44ad"
+    },
+    {
+      "id": "vid_004",
+      "title": "Why Electron Consumes 1GB RAM & How Native C++ Fixes It",
+      "channelTitle": "Software Architecture Labs",
+      "channelId": "chan_004",
+      "duration": "19:42",
+      "viewCount": 312000,
+      "publishedAt": "2 weeks ago",
+      "description": "Comparative RAM and CPU analysis between Chromium-based webviews and native SDL2/Win32/Wayland desktop renderers.",
+      "color": "#d35400"
+    },
+    {
+      "id": "vid_005",
+      "title": "Buildroot & Yocto: Custom Minimal Linux OS from Scratch",
+      "channelTitle": "Embedded Linux Engineering",
+      "channelId": "chan_001",
+      "duration": "51:04",
+      "viewCount": 120500,
+      "publishedAt": "3 weeks ago",
+      "description": "Cross-compiling a sub-50MB Linux distribution with toolchain, BusyBox, GStreamer and custom application init scripts.",
+      "color": "#27ae60"
+    },
+    {
+      "id": "vid_006",
+      "title": "Understanding OAuth 2.0 Device Flow for Embedded Appliances",
+      "channelTitle": "Security & Network Protocols",
+      "channelId": "chan_005",
+      "duration": "15:22",
+      "viewCount": 68000,
+      "publishedAt": "1 month ago",
+      "description": "RFC 8628 Device Authorization Grant explained. Authorizing devices without browsers or input keyboards.",
+      "color": "#2980b9"
+    },
+    {
+      "id": "vid_007",
+      "title": "Hardware Accelerated UI Rendering on Low-End Chips",
+      "channelTitle": "Graphics & Systems",
+      "channelId": "chan_006",
+      "duration": "24:30",
+      "viewCount": 87900,
+      "publishedAt": "1 month ago",
+      "description": "Double buffering, dirty rectangle tracking, and DMA display transfers on budget SoCs with 512MB RAM.",
+      "color": "#c0392b"
+    },
+    {
+      "id": "vid_008",
+      "title": "Low Latency Audio & Video Synchronization in C++",
+      "channelTitle": "Embedded Multimedia Hub",
+      "channelId": "chan_003",
+      "duration": "31:18",
+      "viewCount": 54200,
+      "publishedAt": "2 months ago",
+      "description": "Clock recovery, PTS/DTS timestamps, ALSA audio buffer ring management and jitter mitigation.",
+      "color": "#7f8c8d"
+    }
+  ],
+  "nextPageToken": "home_page_2",
+  "totalResults": 8
+}
