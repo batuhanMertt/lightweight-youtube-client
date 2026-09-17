@@ -144,6 +144,11 @@ ChildProcessStats PerformanceMonitor::getChildProcessStats() {
     return stats;
 }
 
+void PerformanceMonitor::setPlayerInfo(const std::string& info) {
+    std::lock_guard<std::mutex> lock(m_playerInfoMutex);
+    m_playerInfo = info;
+}
+
 std::string PerformanceMonitor::getFormattedSummary() {
     auto now = std::chrono::steady_clock::now();
     if (!m_cachedSummary.empty() &&
@@ -170,7 +175,13 @@ std::string PerformanceMonitor::getFormattedSummary() {
     oss << std::fixed << std::setprecision(1);
     oss << "App: " << mem.currentWorkingSetMb << " MB";
     if (child.processCount > 0) {
-        oss << " | Player (mpv): " << child.workingSetMb << " MB"
+        std::string playerInfo;
+        {
+            std::lock_guard<std::mutex> lock(m_playerInfoMutex);
+            playerInfo = m_playerInfo;
+        }
+        oss << " | Player (mpv" << (playerInfo.empty() ? "" : ", " + playerInfo) << "): "
+            << child.workingSetMb << " MB"
             << " | Total: " << (mem.currentWorkingSetMb + child.workingSetMb) << " MB"
             << " | CPU: " << (appCpu + childCpu) << "%";
     } else {

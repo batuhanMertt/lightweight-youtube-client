@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <chrono>
+#include <mutex>
 
 namespace yt {
 
@@ -36,6 +37,9 @@ public:
 
     ChildProcessStats getChildProcessStats();
 
+    // Short description of what the player is decoding, e.g. "h264 720p HW". Set by the player backend.
+    void setPlayerInfo(const std::string& info);
+
     // Cached, refreshed at most once per second (it is drawn every frame).
     std::string getFormattedSummary();
 
@@ -53,6 +57,9 @@ private:
 
     std::chrono::steady_clock::time_point m_lastSummaryTime;
     std::string m_cachedSummary;
+
+    std::mutex m_playerInfoMutex;
+    std::string m_playerInfo;
 };
 
 } // namespace yt

@@ -1,0 +1,6 @@
+﻿Label: app_h264_sw   Date: 2026-09-17T17:02:34   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        2          284.6            255.9        3.1
+Browser (bench prof.)       -

@@ -1,0 +1,7 @@
+﻿stats={"adShowing":false,"codecs":"av01.0.08M.08 (398) / opus (251)","resolution":"1280x720@60 / 1280x720@60","quality":"hd720","videoWidth":1280,"videoHeight":720,"paused":false,"currentTime":71.712671,"droppedFrames":0,"totalFrames":4309}
+kVideoDecoderName=D3D11VideoDecoder
+kFrameUrl=https://www.youtube.com/watch?v=aqz-KE-bpKQ
+kVideoTracks=[{"alpha mode":"is_opaque","codec":"av1","coded size":"1280x720","color space":{"matrix":"BT709","primaries":"BT709","range":"LIMITED","transfer":"BT709"},"encryption scheme":"Unencrypted","has extra data":false,"hdr metadata":{},"natural size":"1280x720","orientation":"0°","profile":"av1 profile main","visible rect":"0,0 1280x720"}]
+kIsPlatformVideoDecoder=true
+software_flag=False
+played_seconds_during_measurement=32.6

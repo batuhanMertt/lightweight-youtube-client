@@ -1,0 +1,7 @@
+codec=H.264
+codec_long=H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+width=1280
+height=720
+hwdec=d3d11va
+frame_drops=0
+decoder_frame_drops=0

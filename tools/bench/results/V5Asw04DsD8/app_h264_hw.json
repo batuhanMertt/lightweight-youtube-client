@@ -1,0 +1,16 @@
+﻿{
+    "label":  "app_h264_hw",
+    "date":  "2026-09-17T16:29:14",
+    "seconds":  31,
+    "cpu":  "13th Gen Intel(R) Core(TM) i5-13420H",
+    "logicalCores":  12,
+    "groups":  {
+                   "youtube-client + mpv":  {
+                                                "processes":  2,
+                                                "workingSetMb":  238.6,
+                                                "privateMb":  211.2,
+                                                "cpuPercentOfAllCores":  1,
+                                                "coresUsed":  0.12
+                                            }
+               }
+}

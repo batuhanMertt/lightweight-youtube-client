@@ -1,5 +1,8 @@
 #include "platform/windows/WindowsPlayerBackend.h"
 #include "core/Logger.h"
+#include "core/Config.h"
+#include "core/PerformanceMonitor.h"
+#include <cstdlib>
 #include <algorithm>
 #include <chrono>
 #include <sstream>
@@ -60,7 +63,120 @@ bool extractJsonNumber(const std::string& line, double& out) {
     }
 }
 
+bool extractJsonString(const std::string& line, std::string& out) {
+    size_t dPos = line.find("\"data\":\"");
+    if (dPos == std::string::npos) return false;
+    size_t start = dPos + 8;
+    size_t end = start;
+    while (end < line.size() && !(line[end] == '"' && line[end - 1] != '\\')) ++end;
+    if (end >= line.size()) return false;
+    out = line.substr(start, end - start);
+    return true;
+}
+
+std::string envOr(const char* name, const std::string& fallback) {
+    const char* v = std::getenv(name);
+    return (v && v[0] != '\0') ? std::string(v) : fallback;
+}
+
+std::wstring widen(const std::string& s) {
+    return std::wstring(s.begin(), s.end()); // config values are ASCII
+}
+
 } // namespace
+
+std::wstring WindowsPlayerBackend::buildYtdlFormat() const {
+    const auto& cfg = ConfigManager::instance().getConfig();
+    // Environment variables override the config file (used by tools/bench).
+    std::string codec = envOr("YTC_VIDEO_CODEC", cfg.videoCodec);
+    std::string height = envOr("YTC_MAX_HEIGHT", std::to_string(cfg.maxVideoHeight > 0 ? cfg.maxVideoHeight : 720));
+    const std::string h = "[height<=" + height + "]";
+
+    // Note: YouTube only offers a combined audio+video file at 360p nowadays, so a plain
+    // "best[height<=720]" silently plays 360p. Ask for separate video + audio streams first.
+    std::string format;
+    if (codec == "h264") {
+        // H.264 (avc1) is hardware-decoded by practically every GPU since ~2011, including old
+        // laptops that can't decode VP9/AV1 in hardware and would otherwise burn CPU.
+        format = "bestvideo" + h + "[vcodec^=avc1]+bestaudio[acodec^=mp4a]"
+                 "/bestvideo" + h + "[vcodec^=avc1]+bestaudio"
+                 "/best" + h + "[vcodec^=avc1]"
+                 "/bestvideo" + h + "+bestaudio/best" + h + "/best";
+    } else if (codec == "vp9" || codec == "av1") {
+        // Mainly for benchmarking: force the codecs browsers usually get from YouTube.
+        if (codec == "vp9") {
+            format = "bestvideo" + h + "[vcodec^=vp9]+bestaudio/bestvideo" + h + "[vcodec^=vp09]+bestaudio/";
+        } else {
+            format = "bestvideo" + h + "[vcodec^=av01]+bestaudio/";
+        }
+        format += "bestvideo" + h + "+bestaudio/best" + h + "/best";
+    } else {
+        // "any": let yt-dlp choose (it prefers AV1 > VP9 > H.264 when a video has them).
+        format = "bestvideo" + h + "+bestaudio/best" + h + "/best";
+    }
+    return widen(format);
+}
+
+std::wstring WindowsPlayerBackend::hwdecMode() const {
+    const auto& cfg = ConfigManager::instance().getConfig();
+    std::string mode = envOr("YTC_HWDEC", cfg.hardwareDecoding ? "auto-safe" : "no");
+    return widen(mode);
+}
+
+void WindowsPlayerBackend::updatePlaybackInfo(bool forceWrite) {
+    std::string label;
+    std::ostringstream file;
+    {
+        std::lock_guard<std::mutex> lock(m_infoMutex);
+        long long now = steadyNowMs();
+        if (!forceWrite && now - m_lastInfoWriteMs < 1000) return;
+        m_lastInfoWriteMs = now;
+
+        std::string codecShort = m_infoCodecShort;
+        if (codecShort.empty() && !m_infoCodec.empty()) {
+            if (m_infoCodec.find("H.264") != std::string::npos) codecShort = "h264";
+            else if (m_infoCodec.find("VP9") != std::string::npos) codecShort = "vp9";
+            else if (m_infoCodec.find("AV1") != std::string::npos) codecShort = "av1";
+            else codecShort = m_infoCodec.substr(0, m_infoCodec.find(' '));
+        }
+        bool hw = !m_infoHwdec.empty() && m_infoHwdec != "no";
+        if (!codecShort.empty()) {
+            label = codecShort;
+            if (m_infoHeight > 0) label += " " + std::to_string(m_infoHeight) + "p";
+            if (m_infoFps > 0.5) label += std::to_string(static_cast<int>(m_infoFps + 0.5));
+            label += hw ? " HW" : " SW";
+        }
+
+        file << "codec=" << codecShort << "\n"
+             << "codec_long=" << m_infoCodec << "\n"
+             << "width=" << m_infoWidth << "\n"
+             << "height=" << m_infoHeight << "\n"
+             << "fps=" << m_infoFps << "\n"
+             << "position=" << m_infoPosition << "\n"
+             << "hwdec=" << (m_infoHwdec.empty() ? "no" : m_infoHwdec) << "\n"
+             << "frame_drops=" << m_infoFrameDrops << "\n"
+             << "decoder_frame_drops=" << m_infoDecoderDrops << "\n";
+    }
+
+    PerformanceMonitor::instance().setPlayerInfo(label);
+
+#if defined(_WIN32)
+    wchar_t exePathBuf[MAX_PATH];
+    GetModuleFileNameW(nullptr, exePathBuf, MAX_PATH);
+    std::wstring dir = exePathBuf;
+    size_t slash = dir.find_last_of(L"\\/");
+    if (slash != std::wstring::npos) dir = dir.substr(0, slash);
+    std::wstring path = dir + L"\\playback_info.txt";
+    const std::string text = file.str();
+    HANDLE h = CreateFileW(path.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, CREATE_ALWAYS,
+                           FILE_ATTRIBUTE_NORMAL, nullptr);
+    if (h != INVALID_HANDLE_VALUE) {
+        DWORD written = 0;
+        WriteFile(h, text.data(), static_cast<DWORD>(text.size()), &written, nullptr);
+        CloseHandle(h);
+    }
+#endif
+}
 
 WindowsPlayerBackend::WindowsPlayerBackend() {
     m_running = true;
@@ -239,9 +355,11 @@ bool WindowsPlayerBackend::launchMpvProcess(const std::string& initialUri) {
         // video had focus, and our shortcuts (Esc, F, arrows) silently stopped working.
         + L"--input-default-bindings=no --input-vo-keyboard=no --input-cursor=no "
         + L"--keep-open=yes --idle=yes --force-window=yes "
-        + L"--hwdec=auto-safe "
-        + L"--ytdl-format=best[height<=720]/bestvideo[height<=720]+bestaudio/best "
-        + L"--cache=yes --demuxer-max-bytes=32M --demuxer-readahead-secs=15 ";
+        + L"--hwdec=" + hwdecMode() + L" "
+        + L"--ytdl-format=" + buildYtdlFormat() + L" "
+        // mpv keeps 50 MiB of already-played data for instant backward seeks by default.
+        // 16 MiB still covers several -10 s jumps at 720p and saves memory.
+        + L"--cache=yes --demuxer-max-bytes=32M --demuxer-max-back-bytes=16M --demuxer-readahead-secs=15 ";
 
     if (!ytdlPath.empty()) {
         std::wstring cleanYtdl = ytdlPath;
@@ -329,6 +447,14 @@ bool WindowsPlayerBackend::launchMpvProcess(const std::string& initialUri) {
     sendIpcCommand("{\"command\": [\"observe_property\", 2, \"duration\"]}\n");
     sendIpcCommand("{\"command\": [\"observe_property\", 3, \"pause\"]}\n");
     sendIpcCommand("{\"command\": [\"observe_property\", 4, \"eof-reached\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 5, \"video-codec\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 6, \"hwdec-current\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 7, \"width\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 8, \"height\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 9, \"frame-drop-count\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 10, \"decoder-frame-drop-count\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 11, \"current-tracks/video/codec\"]}\n");
+    sendIpcCommand("{\"command\": [\"observe_property\", 12, \"container-fps\"]}\n");
     sendIpcCommand("{\"command\": [\"set_property\", \"volume\", " + std::to_string(m_volume.load()) + "]}\n");
 
     if (!initialUri.empty()) {
@@ -391,6 +517,11 @@ void WindowsPlayerBackend::handleIpcLine(const std::string& line) {
         if (extractJsonNumber(line, cur)) {
             int sec = std::max(0, static_cast<int>(cur));
             m_currentPosition = sec;
+            {
+                std::lock_guard<std::mutex> lock(m_infoMutex);
+                m_infoPosition = cur;
+            }
+            updatePlaybackInfo(false);
             if (m_posCb) m_posCb(sec, m_duration.load());
         }
     } else if (line.find("\"name\":\"duration\"") != std::string::npos) {
@@ -416,6 +547,52 @@ void WindowsPlayerBackend::handleIpcLine(const std::string& line) {
                 setState(PlaybackState::PLAYING);
             }
         }
+    } else if (line.find("\"name\":\"video-codec\"") != std::string::npos ||
+               line.find("\"name\":\"hwdec-current\"") != std::string::npos) {
+        std::string value;
+        if (!extractJsonString(line, value)) value.clear();
+        bool isCodec = line.find("\"name\":\"video-codec\"") != std::string::npos;
+        {
+            std::lock_guard<std::mutex> lock(m_infoMutex);
+            (isCodec ? m_infoCodec : m_infoHwdec) = value;
+        }
+        if (!value.empty()) {
+            LOG_INFO(std::string(isCodec ? "MPV video codec: " : "MPV hardware decoding: ") + value);
+        }
+        updatePlaybackInfo(true);
+    } else if (line.find("\"name\":\"current-tracks/video/codec\"") != std::string::npos) {
+        std::string value;
+        if (!extractJsonString(line, value)) value.clear();
+        {
+            std::lock_guard<std::mutex> lock(m_infoMutex);
+            m_infoCodecShort = value;
+        }
+        updatePlaybackInfo(true);
+    } else if (line.find("\"name\":\"container-fps\"") != std::string::npos) {
+        double v = 0.0;
+        {
+            std::lock_guard<std::mutex> lock(m_infoMutex);
+            m_infoFps = extractJsonNumber(line, v) ? v : 0.0;
+        }
+        updatePlaybackInfo(true);
+    } else if (line.find("\"name\":\"width\"") != std::string::npos ||
+               line.find("\"name\":\"height\"") != std::string::npos) {
+        double v = 0.0;
+        int px = extractJsonNumber(line, v) ? static_cast<int>(v) : 0;
+        {
+            std::lock_guard<std::mutex> lock(m_infoMutex);
+            (line.find("\"name\":\"width\"") != std::string::npos ? m_infoWidth : m_infoHeight) = px;
+        }
+        updatePlaybackInfo(true);
+    } else if (line.find("\"name\":\"frame-drop-count\"") != std::string::npos ||
+               line.find("\"name\":\"decoder-frame-drop-count\"") != std::string::npos) {
+        double v = 0.0;
+        long long n = extractJsonNumber(line, v) ? static_cast<long long>(v) : -1;
+        {
+            std::lock_guard<std::mutex> lock(m_infoMutex);
+            (line.find("\"name\":\"decoder-frame-drop-count\"") != std::string::npos ? m_infoDecoderDrops : m_infoFrameDrops) = n;
+        }
+        updatePlaybackInfo(false);
     } else if (line.find("\"name\":\"eof-reached\"") != std::string::npos) {
         if (line.find("\"data\":true") != std::string::npos) {
             m_eofReached = true;

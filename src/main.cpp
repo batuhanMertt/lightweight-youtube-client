@@ -21,6 +21,7 @@
 #include "ui/AppUI.h"
 
 #include <chrono>
+#include <cstdlib>
 #include <thread>
 #include <memory>
 
@@ -94,6 +95,27 @@ int main(int /*argc*/, char* /*argv*/[]) {
     LOG_INFO(yt::PerformanceMonitor::instance().getFormattedSummary());
 
     window->show();
+
+    // Benchmark / scripting hook: YTC_AUTOPLAY=<videoId> opens that video right after start,
+    // so tools/bench can measure playback without clicking through the UI.
+    if (const char* autoplayId = std::getenv("YTC_AUTOPLAY")) {
+        if (autoplayId[0] != '\0') {
+            yt::VideoItem item;
+            item.id = autoplayId;
+            item.title = std::string("Video ") + autoplayId;
+            LOG_INFO(std::string("YTC_AUTOPLAY: opening ") + autoplayId);
+            ui.playVideo(item);
+        }
+    }
+#if defined(_WIN32)
+    // YTC_BENCH=1: keep the window above everything (its console window included). A covered
+    // window stops presenting video frames, which would make the CPU numbers look too good.
+    if (const char* bench = std::getenv("YTC_BENCH")) {
+        if (bench[0] == '1') {
+            SetWindowPos(window->getHwnd(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+        }
+    }
+#endif
 
     // 11. Main Loop with 30 FPS Cap for Low CPU / Low Power Profile
     const int targetFps = config.uiFps > 0 ? config.uiFps : 30;

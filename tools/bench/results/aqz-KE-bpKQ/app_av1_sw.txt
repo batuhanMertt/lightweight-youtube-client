@@ -1,0 +1,6 @@
+﻿Label: app_av1_sw   Date: 2026-09-17T17:04:49   Window: 31s
+CPU: 13th Gen Intel(R) Core(TM) i5-13420H (12 logical)   RAM: 15.7 GB
+
+Group                   Procs  WorkingSet MB  PrivateBytes MB      CPU %
+youtube-client + mpv        2          271.3            242.7        4.3
+Browser (bench prof.)       -

@@ -1,0 +1,16 @@
+﻿{
+    "label":  "chrome_sw",
+    "date":  "2026-09-17T16:35:27",
+    "seconds":  30,
+    "cpu":  "13th Gen Intel(R) Core(TM) i5-13420H",
+    "logicalCores":  12,
+    "groups":  {
+                   "Browser (bench prof.)":  {
+                                                 "processes":  11,
+                                                 "workingSetMb":  1242.3,
+                                                 "privateMb":  803.9,
+                                                 "cpuPercentOfAllCores":  3.04,
+                                                 "coresUsed":  0.37
+                                             }
+               }
+}

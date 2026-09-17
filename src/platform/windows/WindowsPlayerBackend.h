@@ -52,6 +52,9 @@ private:
     void setState(PlaybackState s);
     void handleIpcLine(const std::string& line);
     void markSeekPending();
+    void updatePlaybackInfo(bool forceWrite);
+    std::wstring buildYtdlFormat() const;
+    std::wstring hwdecMode() const;
     std::wstring findMpvBinary();
     std::wstring findYtDlpBinary();
 
@@ -70,6 +73,20 @@ private:
     // While a seek is in flight mpv still emits a few stale time-pos values; ignore them
     // until playback-restart (or this deadline) so the seek bar doesn't jump back and forth.
     std::atomic<long long> m_ignoreTimePosUntilMs{0};
+
+    // What mpv is actually decoding (from its own properties). Shown in the status bar and
+    // written to playback_info.txt next to the exe so benchmarks can record it.
+    std::mutex m_infoMutex;
+    std::string m_infoCodec;       // long name, e.g. "Google VP9"
+    std::string m_infoCodecShort;  // e.g. "vp9"
+    double m_infoFps{0.0};
+    double m_infoPosition{0.0};
+    std::string m_infoHwdec;
+    int m_infoWidth{0};
+    int m_infoHeight{0};
+    long long m_infoFrameDrops{-1};
+    long long m_infoDecoderDrops{-1};
+    long long m_lastInfoWriteMs{0};
 
     StateCallback m_stateCb;
     PositionCallback m_posCb;

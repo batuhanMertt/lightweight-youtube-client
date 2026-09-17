@@ -1,0 +1,10 @@
+codec=av1
+codec_long=Alliance for Open Media AV1
+width=1280
+height=720
+fps=60
+position=59.2
+hwdec=no
+frame_drops=0
+decoder_frame_drops=0
+played_seconds_during_measurement=33.1
