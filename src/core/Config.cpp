@@ -42,6 +42,32 @@ void ConfigManager::loadFromFile(const std::string& configFilePath) {
     m_config.maxThumbnailCacheMb = extractInt("max_thumbnail_cache_mb", m_config.maxThumbnailCacheMb);
     m_config.networkTimeoutMs = extractInt("network_timeout_ms", m_config.networkTimeoutMs);
     m_config.uiFps = extractInt("ui_fps", m_config.uiFps);
+    m_config.maxVideoHeight = extractInt("max_video_height", m_config.maxVideoHeight);
+
+    auto extractString = [&](const std::string& key, const std::string& defaultVal) -> std::string {
+        size_t pos = content.find("\"" + key + "\"");
+        if (pos == std::string::npos) return defaultVal;
+        pos = content.find(':', pos);
+        if (pos == std::string::npos) return defaultVal;
+        size_t start = content.find('"', pos);
+        if (start == std::string::npos) return defaultVal;
+        size_t end = content.find('"', start + 1);
+        if (end == std::string::npos) return defaultVal;
+        return content.substr(start + 1, end - start - 1);
+    };
+    auto extractBool = [&](const std::string& key, bool defaultVal) -> bool {
+        size_t pos = content.find("\"" + key + "\"");
+        if (pos == std::string::npos) return defaultVal;
+        pos = content.find(':', pos);
+        if (pos == std::string::npos) return defaultVal;
+        size_t valuePos = content.find_first_not_of(" \t", pos + 1);
+        if (valuePos == std::string::npos) return defaultVal;
+        if (content.compare(valuePos, 4, "true") == 0) return true;
+        if (content.compare(valuePos, 5, "false") == 0) return false;
+        return defaultVal;
+    };
+    m_config.videoCodec = extractString("video_codec", m_config.videoCodec);
+    m_config.hardwareDecoding = extractBool("hardware_decoding", m_config.hardwareDecoding);
 
     if (content.find("\"use_mock_data\": false") != std::string::npos ||
         content.find("\"use_mock_data\":false") != std::string::npos) {

@@ -1,0 +1,6 @@
+﻿stats={"adShowing":false,"codecs":"avc1.4d401f (136) / opus (251)","resolution":"1280x720@25 / 1280x720@25","quality":"hd720","videoWidth":1280,"videoHeight":720,"paused":false,"currentTime":67.494098,"droppedFrames":0,"totalFrames":1692}
+kVideoDecoderName=D3D11VideoDecoder
+kFrameUrl=https://www.youtube.com/watch?v=V5Asw04DsD8
+kVideoTracks=[{"alpha mode":"is_opaque","codec":"h264","coded size":"1280x720","color space":{"matrix":"BT709","primaries":"BT709","range":"LIMITED","transfer":"BT709"},"encryption scheme":"Unencrypted","has extra data":false,"hdr metadata":{},"natural size":"1280x720","orientation":"0°","profile":"h264 main","visible rect":"0,0 1280x720"}]
+kIsPlatformVideoDecoder=true
+software_flag=False

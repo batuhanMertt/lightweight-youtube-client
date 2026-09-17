@@ -8,6 +8,9 @@
   "network_timeout_ms": 6000,
   "enable_profiling": true,
   "ui_fps": 30,
+  "video_codec": "h264",
+  "max_video_height": 720,
+  "hardware_decoding": true,
   "use_mock_data": false,
   "youtube_api_key": ""
 }

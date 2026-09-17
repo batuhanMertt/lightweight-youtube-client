@@ -16,6 +16,13 @@ struct AppConfig {
     int uiFps{30};
     bool useMockData{true};
     std::string assetsDir{"assets"};
+
+    // Video playback (mpv). "h264" prefers H.264/AVC streams, which almost every GPU from the
+    // last ~12 years decodes in hardware. "any" lets yt-dlp pick (usually AV1 or VP9, like a
+    // browser); "vp9" / "av1" force those codecs (useful for benchmarks).
+    std::string videoCodec{"h264"};
+    int maxVideoHeight{720};
+    bool hardwareDecoding{true};
 };
 
 class ConfigManager {

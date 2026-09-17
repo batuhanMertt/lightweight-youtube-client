@@ -8,6 +8,7 @@
 # Usage: powershell -ExecutionPolicy Bypass -File tools\bench\measure.ps1 -Label app_playing -Seconds 30 -Delay 10
 param(
     [string]$Label = "sample",
+    [string]$OutDir = "",
     [int]$Seconds = 30,
     # Grace period before sampling starts, so you can bring the player window back to the
     # front (an occluded window stops drawing video frames and would look unfairly cheap).
@@ -73,6 +74,7 @@ $lines += "Label: $Label   Date: $(Get-Date -Format s)   Window: $([math]::Round
 $lines += "CPU: $cpuName ($cores logical)   RAM: $([math]::Round($os.TotalVisibleMemorySize/1MB,1)) GB"
 $lines += ""
 $lines += "{0,-22} {1,6} {2,14} {3,16} {4,10}" -f "Group", "Procs", "WorkingSet MB", "PrivateBytes MB", "CPU %"
+$summary = [ordered]@{ label = $Label; date = (Get-Date -Format s); seconds = [math]::Round($elapsed); cpu = $cpuName; logicalCores = $cores; groups = [ordered]@{} }
 foreach ($g in $groups.Keys) {
     $s = $ramSamples[$g]
     if ($s.Count -eq 0) {
@@ -85,12 +87,20 @@ foreach ($g in $groups.Keys) {
     $cpu = ((Get-CpuTotal $groups[$g]) - $startCpu[$g]) / ($elapsed * $cores) * 100
     if ($cpu -lt 0) { $cpu = 0 }
     $lines += [string]::Format($ci, "{0,-22} {1,6} {2,14:F1} {3,16:F1} {4,10:F1}", $g, $n, $ws, $pb, $cpu)
+    $summary.groups[$g] = [ordered]@{
+        processes = $n
+        workingSetMb = [math]::Round($ws, 1)
+        privateMb = [math]::Round($pb, 1)
+        cpuPercentOfAllCores = [math]::Round($cpu, 2)
+        coresUsed = [math]::Round($cpu * $cores / 100, 2)
+    }
 }
 
-$outDir = Join-Path $PSScriptRoot "results"
+$outDir = if ($OutDir) { $OutDir } else { Join-Path $PSScriptRoot "results" }
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 $outFile = Join-Path $outDir "$Label.txt"
 $lines | Set-Content -Path $outFile -Encoding UTF8
+$summary | ConvertTo-Json -Depth 5 | Set-Content -Path (Join-Path $outDir "$Label.json") -Encoding UTF8
 $lines | ForEach-Object { Write-Host $_ }
 Write-Host ""
 Write-Host "Saved to $outFile"
