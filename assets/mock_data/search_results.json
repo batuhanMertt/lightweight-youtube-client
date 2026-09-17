@@ -1,0 +1,117 @@
+{
+  "query": "linux kernel",
+  "items": [
+    {
+      "id": "search_001",
+      "title": "Linux Kernel 6.x Internals: Scheduler & CFS Explained",
+      "channelTitle": "Embedded Linux Engineering",
+      "channelId": "chan_001",
+      "duration": "48:10",
+      "viewCount": 78200,
+      "publishedAt": "3 weeks ago",
+      "description": "How the completely fair scheduler organizes task groups and allocates CPU slices across cores.",
+      "color": "#34495e"
+    },
+    {
+      "id": "search_002",
+      "title": "Writing Linux Device Drivers for ARM SoC Peripherals",
+      "channelTitle": "Embedded Linux Engineering",
+      "channelId": "chan_001",
+      "duration": "1:02:15",
+      "viewCount": 142000,
+      "publishedAt": "1 month ago",
+      "description": "Character device drivers, platform bus drivers, device tree bindings, and memory-mapped I/O.",
+      "color": "#2c3e50"
+    },
+    {
+      "id": "search_003",
+      "title": "Kernel Memory Management: Buddy Allocator & Slab Caches",
+      "channelTitle": "Operating Systems Today",
+      "channelId": "chan_007",
+      "duration": "33:45",
+      "viewCount": 59100,
+      "publishedAt": "2 months ago",
+      "description": "Physical page frame allocation, slab cache pools, and page reclamation under memory pressure.",
+      "color": "#16a085"
+    },
+    {
+      "id": "search_004",
+      "title": "Linux Networking Subsystem: Zero-Copy Sockets & XDP",
+      "channelTitle": "High Throughput Systems",
+      "channelId": "chan_008",
+      "duration": "41:12",
+      "viewCount": 83400,
+      "publishedAt": "3 months ago",
+      "description": "Bypassing network stack overhead with eBPF, AF_XDP rings, and kernel bypass drivers.",
+      "color": "#2980b9"
+    },
+    {
+      "id": "search_005",
+      "title": "Embedded Linux Boot Time Optimization: From 15s to 1.2s",
+      "channelTitle": "Embedded Multimedia Hub",
+      "channelId": "chan_003",
+      "duration": "27:19",
+      "viewCount": 115000,
+      "publishedAt": "4 months ago",
+      "description": "Kernel command-line tuning, quiet boot, initramfs stripping, and systemd-analyze blame benchmarks.",
+      "color": "#e67e22"
+    },
+    {
+      "id": "search_006",
+      "title": "Real-Time Linux: PREEMPT_RT Patch & Low-Jitter Systems",
+      "channelTitle": "Operating Systems Today",
+      "channelId": "chan_007",
+      "duration": "36:50",
+      "viewCount": 42300,
+      "publishedAt": "5 months ago",
+      "description": "Understanding deterministic interrupt handling, high-resolution timers, and cyclic test benchmarks.",
+      "color": "#8e44ad"
+    },
+    {
+      "id": "search_007",
+      "title": "Debugging Kernel Panics with GDB, KGDB & Serial Console",
+      "channelTitle": "Embedded Linux Engineering",
+      "channelId": "chan_001",
+      "duration": "39:05",
+      "viewCount": 63000,
+      "publishedAt": "6 months ago",
+      "description": "Setting up kgdb over serial port, analyzing crash dumps, and inspecting stack traces with addr2line.",
+      "color": "#c0392b"
+    },
+    {
+      "id": "search_008",
+      "title": "DMA Buffer Sharing (dma-buf) in Linux Video Pipelines",
+      "channelTitle": "Graphics & Systems",
+      "channelId": "chan_006",
+      "duration": "29:40",
+      "viewCount": 31200,
+      "publishedAt": "7 months ago",
+      "description": "Sharing hardware buffers between V4L2 capture and DRM/KMS display without CPU memory copies.",
+      "color": "#27ae60"
+    },
+    {
+      "id": "search_009",
+      "title": "Linux File Systems for Flash Memory: UBIFS vs SquashFS",
+      "channelTitle": "Embedded Multimedia Hub",
+      "channelId": "chan_003",
+      "duration": "22:15",
+      "viewCount": 48900,
+      "publishedAt": "8 months ago",
+      "description": "Wear leveling, NAND flash characteristics, read-only rootfs architectures, and atomic firmware upgrades.",
+      "color": "#d35400"
+    },
+    {
+      "id": "search_010",
+      "title": "Building Custom Busybox Minimal Rootfs from Source",
+      "channelTitle": "Software Architecture Labs",
+      "channelId": "chan_004",
+      "duration": "18:30",
+      "viewCount": 97400,
+      "publishedAt": "9 months ago",
+      "description": "Creating an ultra lightweight 8MB Linux filesystem with busybox, uClibc/musl, and custom daemons.",
+      "color": "#7f8c8d"
+    }
+  ],
+  "nextPageToken": "search_page_2",
+  "totalResults": 10
+}
